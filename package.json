@@ -1,9 +1,9 @@
 {
-  "name": "svelte-app",
+  "name": "sa-template",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
+    "build": "node fixName.js && rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear"
   },
