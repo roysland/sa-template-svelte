@@ -4,9 +4,12 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
+import preprocess from 'svelte-preprocess';
+import alias from '@rollup/plugin-alias'
+import path from 'path';
 
 const production = !process.env.ROLLUP_WATCH;
-
+const projectRootDir = path.resolve(__dirname);
 function serve() {
 	let server;
 
@@ -37,7 +40,13 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		alias({
+			entries: [
+				{ find: '@', replacement: path.resolve(projectRootDir, 'src')}
+			]
+		}),
 		svelte({
+			preprocess: preprocess({ sourceMap: !production }),
 			compilerOptions: {
 				// enable run-time checks when not in production
 				dev: !production
